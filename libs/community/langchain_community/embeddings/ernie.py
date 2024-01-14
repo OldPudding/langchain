@@ -19,10 +19,9 @@ class ErnieEmbeddings(BaseModel, Embeddings):
     ernie_client_id: Optional[str] = None
     ernie_client_secret: Optional[str] = None
     access_token: Optional[str] = None
+    model_name: Optional[str] = "embedding-v1"
 
     chunk_size: int = 16
-
-    model_name = "ErnieBot-Embedding-V1"
 
     _lock = threading.Lock()
 
@@ -48,7 +47,7 @@ class ErnieEmbeddings(BaseModel, Embeddings):
             f"{self.ernie_api_base}/rpc/2.0/ai_custom/v1/wenxinworkshop/embeddings"
         )
         resp = requests.post(
-            f"{base_url}/embedding-v1",
+            f"{base_url}/{self.model_name}",
             headers={
                 "Content-Type": "application/json",
             },
